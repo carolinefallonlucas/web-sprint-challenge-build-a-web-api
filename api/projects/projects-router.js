@@ -4,7 +4,7 @@
 const router = require("express").Router()
 const Projects = require("./projects-model")
 
-router.get("/", (req, res) =>
+router.get("/", async (req, res) =>
 {
     Projects.get()
         .then(data =>
@@ -13,7 +13,9 @@ router.get("/", (req, res) =>
         })
     
     .catch (err => {
-        res.status(500).json({err: err.message})
+        res.status(500).json({erro: err.message})
     })
 })
+
+module.exports = router
 

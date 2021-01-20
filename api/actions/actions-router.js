@@ -1,18 +1,25 @@
 // Write your "actions" router here!
+const express = require("express");
 
+const router = express.Router();
+const Actions = require("./actions-model");
 
-const router = require("express").Router()
-const Actions = require("./actions-model")
+const {
+    validateActionId,
+    validateAction,
+    validateProjectId,
+    validateProject
+} = require('../middleware/index')
+router.get("/", async (req, res) => {
+try {
+    const getActions = await Actions.get();  
+    res.status(200).json(getActions);
 
-router.get("/", (req, res) =>
-{
-    Actions.get()
-        .then(data =>
-        { 
-        res.status(200).json(data)
-        })
+        } catch (err) {
     
-    .catch (err => {
-        res.status(500).json({err: err.message})
-    })
+
+    res.status(500).json({ err: "unable to retrieve actions" });
+    }
 })
+
+module.exports = router 
